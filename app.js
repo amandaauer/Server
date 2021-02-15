@@ -72,6 +72,7 @@ var Firework;
         try {
             const collection = db.collection("rocket");
             collection.insertMany([response]);
+            console.log("add");
             _response.end();
         }
         catch (e) {
@@ -82,13 +83,14 @@ var Firework;
         let rockets = await db.collection("rocket");
         let rocketName = response.Name;
         await rockets.deleteOne({ "Name": rocketName });
-        _response.end();
+        console.log("del");
         _response.end();
     }
     async function GetRockets(_response) {
         try {
             let rockets = await db.collection("rocket").find({});
             let results = await rockets.toArray();
+            console.log("get");
             await _response.write(JSON.stringify(results));
             await _response.end();
         }

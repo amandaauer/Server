@@ -50,7 +50,7 @@ export namespace Firework {
             for (let key in url.query) {
               response[key] = url.query[key];
             }
-    }
+        }
         switch (_request.method) {
           case "POST":
            await AddRocket(response, _response);
@@ -71,6 +71,7 @@ export namespace Firework {
         try {
           const collection: Mongo.Collection<any> = db.collection("rocket");
           collection.insertMany([response]);
+          console.log("add")
           _response.end();
         } catch (e) {
           console.log(e);
@@ -80,14 +81,15 @@ export namespace Firework {
     let rockets: Mongo.Collection<any> = await db.collection("rocket");
     let rocketName: string  = response.Name;
     await rockets.deleteOne({ "Name": rocketName });
+    console.log("del")
     _response.end();
 
-    _response.end();
   }
   async function GetRockets(_response: Http.ServerResponse): Promise<void> {
     try {
       let rockets: Mongo.Cursor = await db.collection("rocket").find({});
       let results: string[] = await rockets.toArray();
+      console.log("get")
       await _response.write(JSON.stringify(results));                             
       await  _response.end();
     } catch (e) {
