@@ -5,6 +5,7 @@ const Http = require("http");
 const Url = require("url");
 const Mongo = require("mongodb");
 const assert = require("assert");
+const uuid_1 = require("uuid");
 var Firework;
 (function (Firework) {
     // interface RocketData  {
@@ -70,6 +71,8 @@ var Firework;
     }
     function AddRocket(response, _response) {
         try {
+            console.log(response);
+            response["_id"] = uuid_1.v4();
             const collection = db.collection("rocket");
             collection.insertMany([response]);
             console.log("add");

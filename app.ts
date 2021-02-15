@@ -2,6 +2,7 @@ import * as Http from "http";
 import * as Url from "url";
 import * as Mongo from "mongodb";
 import * as assert from "assert";
+import { v4 as uuidv4 } from 'uuid';
 export namespace Firework {
   // interface RocketData  {
   //   name: string;
@@ -67,8 +68,10 @@ export namespace Firework {
             break;
         }
   }
-  function AddRocket(response: object, _response: Http.ServerResponse): void {
+  function AddRocket(response: any, _response: Http.ServerResponse): void {
         try {
+          console.log(response)
+          response["_id"]=uuidv4();
           const collection: Mongo.Collection<any> = db.collection("rocket");
           collection.insertMany([response]);
           console.log("add")
